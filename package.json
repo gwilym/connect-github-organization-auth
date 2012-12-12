@@ -1,0 +1,14 @@
+{
+  "name": "connect-github-organisation-auth",
+  "version": "0.0.1",
+  "description": "Connect middleware which enforces GitHub organisation membership for applications",
+  "main": "lib/connect-github-organisation-auth.coffee",
+  "repository": "https://github.com/gwilym/connect-github-organisation-auth.git",
+  "author": "gwilym",
+  "license": "MIT",
+  "dependencies": {
+    "coffee-script": "~1.4.0",
+    "request": "~2.12.0",
+    "async": "~0.1.22"
+  }
+}
