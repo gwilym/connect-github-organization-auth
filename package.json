@@ -1,8 +1,7 @@
 {
   "name": "connect-github-organization-auth",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Connect middleware which enforces GitHub organization membership for applications",
-  "main": "lib/connect-github-organization-auth.coffee",
   "repository": "https://github.com/gwilym/connect-github-organization-auth.git",
   "author": "gwilym",
   "license": "MIT",
