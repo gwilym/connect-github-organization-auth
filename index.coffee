@@ -14,16 +14,20 @@ __is_user_organization_member = (token, username, organization, callback) ->
 		strictSSL: true
 		json: true
 
-	util.debug "checking #{organization} membership for #{username}"
+	if module.exports.debug
+		util.debug "checking #{organization} membership for #{username}"
 
 	github_api.get "https://api.github.com/orgs/#{organization}/members/#{username}", (err, res) ->
+		if module.exports.debug
+			util.debug "#{organization}:#{username}? err:#{err} status:#{if err then '' else res.statusCode}"
+
 		return callback err if err
-		return callback null, res.statusCode in [304, 204]
+		return callback null, res.statusCode in [302, 204]
 
 is_user_organization_member = async.memoize __is_user_organization_member, (token, username, organization) ->
 	[token, username, organization].join "\t"
 
-module.exports = (options) ->
+middleware =  (options) ->
 	(req, res, next) ->
 		is_user_organization_member req.github.user.token, req.github.user.login, options.organization, (err, is_member) ->
 			return next err if err
@@ -32,3 +36,7 @@ module.exports = (options) ->
 			error = new Error "Forbidden"
 			error.status = 403
 			next error
+
+middleware.debug = false
+
+module.exports = middleware
