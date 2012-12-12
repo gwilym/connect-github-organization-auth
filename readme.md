@@ -36,7 +36,7 @@ Isolated example:
         organization: "my-organization"
     }));
 
-Example with `connect_auth_github`:
+Example with `connect_auth_github` with details provided on `process.env`:
 
     var github_auth = require("connect_auth_github");
     var github_organisation_auth = require("connect-github-organisation-auth");
@@ -50,7 +50,7 @@ Example with `connect_auth_github`:
 	});
 
 	app.use(github_organisation_auth({
-		organisation: "bigcommerce"
+		organisation: "my-organization"
 	});
 
 Tests
