@@ -3,7 +3,7 @@ util = require "util"
 async	= require "async"
 request	= require "request"
 
-__is_user_organisation_member = (token, username, organisation, callback) ->
+__is_user_organization_member = (token, username, organization, callback) ->
 	github_api = request.defaults
 		headers:
 			"Authorization": "token #{token}"
@@ -14,18 +14,18 @@ __is_user_organisation_member = (token, username, organisation, callback) ->
 		strictSSL: true
 		json: true
 
-	util.debug "checking #{organisation} membership for #{username}"
+	util.debug "checking #{organization} membership for #{username}"
 
-	github_api.get "https://api.github.com/orgs/#{organisation}/members/#{username}", (err, res) ->
+	github_api.get "https://api.github.com/orgs/#{organization}/members/#{username}", (err, res) ->
 		return callback err if err
 		return callback null, res.statusCode is 204
 
-is_user_organisation_member = async.memoize __is_user_organisation_member, (token, username, organisation) ->
-	[token, username, organisation].join "\t"
+is_user_organization_member = async.memoize __is_user_organization_member, (token, username, organization) ->
+	[token, username, organization].join "\t"
 
 module.exports = (options) ->
 	(req, res, next) ->
-		is_user_organisation_member req.github.user.token, req.github.user.login, options.organisation, (err, is_member) ->
+		is_user_organization_member req.github.user.token, req.github.user.login, options.organization, (err, is_member) ->
 			return next err if err
 			return next null if is_member
 			
