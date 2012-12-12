@@ -18,7 +18,7 @@ __is_user_organization_member = (token, username, organization, callback) ->
 
 	github_api.get "https://api.github.com/orgs/#{organization}/members/#{username}", (err, res) ->
 		return callback err if err
-		return callback null, res.statusCode is 204
+		return callback null, res.statusCode is in [304, 204]
 
 is_user_organization_member = async.memoize __is_user_organization_member, (token, username, organization) ->
 	[token, username, organization].join "\t"
